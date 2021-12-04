@@ -25,13 +25,21 @@ public class PlayerMoviment : MonoBehaviour
         { 
             MovePlayer();
 
-            //if(transform.position.y < -10f)
+            //if (transform.position.y <= -10f)
             //{
-            //    transform.Translate(new Vector3(0f, 10f, 0f));
+            //    StartCoroutine("RespawnPlayer");
+            //    RespawnPlayer();
             //}
         }
     }
 
+    IEnumerable RespawnPlayer()
+    {
+        cc.enabled = false;
+        transform.position = new Vector3(0f, 10f, 0f);
+        yield return new WaitForSeconds(1);
+        cc.enabled = true;
+    }
     private void MovePlayer()
     {
         if (cc.isGrounded)

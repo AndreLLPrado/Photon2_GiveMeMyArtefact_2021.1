@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 
-public class Timer : MonoBehaviourPunCallbacks
+public class Timer : MonoBehaviourPunCallbacks, IPunObservable
 {
     [SerializeField] Text timer;
     public float time;
@@ -48,6 +48,11 @@ public class Timer : MonoBehaviourPunCallbacks
                 view.RPC("RPC_ResetTimer", RpcTarget.All);
             }
 
+            if (eTime)
+            {
+                time = 0.0f;
+                timer.text = time.ToString() + " s";
+            }
         }
     }
 
@@ -72,5 +77,17 @@ public class Timer : MonoBehaviourPunCallbacks
         eTime = false;
         time = aux;
         timer.text = time.ToString() + " s";
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(time);
+        }
+        else
+        {
+            time = (float)stream.ReceiveNext();
+        }
     }
 }

@@ -44,6 +44,8 @@ MonoBehaviour:
   - RPC_VerifyTag
   - RPC_ResetTimer
   - RPC_StartTimer
+  - RPC_TakeDamage
+  - RPC_AimSystem
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
