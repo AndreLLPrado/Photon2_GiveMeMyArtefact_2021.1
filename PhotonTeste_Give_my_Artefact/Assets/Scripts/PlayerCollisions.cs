@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class PlayerCollisions : MonoBehaviourPunCallbacks
+public class PlayerCollisions : MonoBehaviourPunCallbacks, IPunObservable
 {
     PhotonView view;
     string pTag;
     string oTag;
+    public bool catCaught;
     private void Start()
     {
         view = GetComponent<PhotonView>();
@@ -33,12 +34,18 @@ public class PlayerCollisions : MonoBehaviourPunCallbacks
             if(pTag == "Wizzard" && otherTag == "Cat")
             {
                 Debug.Log("you're Wizzard");
+                //GameObject.Find("GameManager").GetComponent<GameManagerScript>().cCaught = true;
+                //catCaught = true;
+                view.RPC("RPC_SyncCatCaught", RpcTarget.All, true);
             }
 
             //Player loses
             else if(pTag == "Cat" && otherTag == "Wizzard")
             {
                 Debug.Log("You're Cat");
+                //GameObject.Find("GameManager").GetComponent<GameManagerScript>().cCaught = true;
+                //catCaught = true;
+                view.RPC("RPC_SyncCatCaught", RpcTarget.All, true);
             }
 
             //Invalid collision
@@ -46,6 +53,12 @@ public class PlayerCollisions : MonoBehaviourPunCallbacks
                 Debug.Log("Invalid Collision, you're " + pTag);
             }
         }
+    }
+
+    [PunRPC]
+    void RPC_SyncCatCaught(bool value)
+    {
+        GameObject.Find("GameManager").GetComponent<GameManagerScript>().cCaught = value;
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -66,5 +79,10 @@ public class PlayerCollisions : MonoBehaviourPunCallbacks
             }
 
         }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        
     }
 }

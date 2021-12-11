@@ -46,6 +46,9 @@ MonoBehaviour:
   - RPC_StartTimer
   - RPC_TakeDamage
   - RPC_AimSystem
+  - RPC_GameOver
+  - RPC_SyncCatCaught
+  - RPC_RandomizeForm
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

@@ -13,6 +13,9 @@ public class PlayerMoviment : MonoBehaviour
     public float jSpeed;
     public float grativy;
 
+    public bool pStop;
+    bool posRes = false;
+
     private void Start()
     {
         cc = GetComponent<CharacterController>();
@@ -22,22 +25,46 @@ public class PlayerMoviment : MonoBehaviour
     void Update()
     {
         if (view.IsMine) 
-        { 
-            MovePlayer();
+        {
+            pStop = GameObject.Find("GameManager").GetComponent<GameManagerScript>().playerStop;
 
-            //if (transform.position.y <= -10f)
-            //{
-            //    StartCoroutine("RespawnPlayer");
-            //    RespawnPlayer();
-            //}
+            if (!pStop)
+            {
+                MovePlayer();
+                posRes = false;
+            }
+
+            if(pStop)
+                GamerOverRespawner(pStop);
+            else
+            {
+                GamerOverRespawner(pStop);
+            }
+
+            if (transform.position.y <= -10f)
+            {
+                RespawnPlayer();
+            }
         }
     }
 
-    IEnumerable RespawnPlayer()
+    void GamerOverRespawner(bool p)
+    {
+        float x, z;
+        
+        cc.enabled = !p;
+        if (p && !posRes)
+        {
+            x = Random.Range(-7.5f, 8f);
+            z = Random.Range(-8.5f, 8.5f);
+            transform.position = new Vector3(x, 10f, z);
+            posRes = true;
+        }
+    }
+    void RespawnPlayer()
     {
         cc.enabled = false;
         transform.position = new Vector3(0f, 10f, 0f);
-        yield return new WaitForSeconds(1);
         cc.enabled = true;
     }
     private void MovePlayer()

@@ -258,6 +258,7 @@ MonoBehaviour:
   speed: 5
   jSpeed: 10
   grativy: 20
+  pStop: 0
 --- !u!114 &2106230112894468829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,6 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4564dfbf7453b66418bc70a9fb2e613f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  catCaught: 0
 --- !u!114 &706519293690309736
 MonoBehaviour:
   m_ObjectHideFlags: 0

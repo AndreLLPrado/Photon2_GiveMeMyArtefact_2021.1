@@ -38,7 +38,17 @@ public class Timer : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (view.IsMine)
         {
-            if(sTimer && !eTime)
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                rTimer = true;
+            }
+
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                sTimer = true;
+            }
+
+            if (sTimer && !eTime)
             {
                 view.RPC("RPC_StartTimer",RpcTarget.All);
             }
