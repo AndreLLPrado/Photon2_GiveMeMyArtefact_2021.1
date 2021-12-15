@@ -49,6 +49,8 @@ MonoBehaviour:
   - RPC_GameOver
   - RPC_SyncCatCaught
   - RPC_RandomizeForm
+  - RPC_SetTimerValue
+  - RPC_UpdateTimer
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

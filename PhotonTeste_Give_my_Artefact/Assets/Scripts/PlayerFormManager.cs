@@ -19,7 +19,7 @@ public class PlayerFormManager : MonoBehaviourPunCallbacks, IPunObservable
         view = GetComponent<PhotonView>();
         pColor.color = Color.white;
 
-        view.RPC("RPC_RandomizeForm", RpcTarget.All);
+        //view.RPC("RPC_RandomizeForm", RpcTarget.All);
     }
 
     private void Update()

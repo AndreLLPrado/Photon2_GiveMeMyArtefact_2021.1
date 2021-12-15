@@ -9,6 +9,7 @@ public class GameManagerScript : MonoBehaviourPunCallbacks, IPunObservable
     public bool endTime;
     public bool cCaught;
     public bool playerStop;
+    public bool tPause;
     [SerializeField] GameObject playerPrefab;
     [SerializeField] GameObject panel;
     [SerializeField] Text winTxt;
@@ -37,6 +38,7 @@ public class GameManagerScript : MonoBehaviourPunCallbacks, IPunObservable
     void GameOver()
     {
         playerStop = true;
+        tPause = true;
         //cat wins
         if (endTime && !cCaught)
         {
@@ -68,6 +70,7 @@ public class GameManagerScript : MonoBehaviourPunCallbacks, IPunObservable
         playerStop = true;
         cCaught = false;
         GameObject.Find("Canvas").GetComponent<Timer>().rTimer = true;
+        tPause = false;
         panel.SetActive(false);
         playerStop = false;
     }
