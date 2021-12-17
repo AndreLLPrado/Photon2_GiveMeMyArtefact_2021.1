@@ -1,2 +1,12 @@
+Day 12/16/2021 09:28PM:
+Credtis Menu and How To Play Menu Created
+
+Day 12/13/2021 10:00PM:
+Timer Set Values Method Created
+
+Day 12/11/2021 11:30AM:
+Game Rules added
+Basic Gameplay Implemented
+
 Day 12/04/2021 11:09AM:
 Timer Sync Fixed
