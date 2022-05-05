@@ -21,6 +21,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Game.unity
     guid: 775ad98ca91b3184896bf0bebda88cb1
   - enabled: 1
-    path: "Assets/Scenes/Cen\xE1rio1.unity"
+    path: Assets/Scenes/Cenario1.unity
     guid: d9c4e1730a8146441b5a5ccba99f657b
+  - enabled: 1
+    path: Assets/Scenes/TestesDestruicao.unity
+    guid: 5b78de2c7c2c33f40a60330b59c7731c
   m_configObjects: {}

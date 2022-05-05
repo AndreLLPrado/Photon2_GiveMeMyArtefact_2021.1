@@ -51,6 +51,11 @@ MonoBehaviour:
   - RPC_RandomizeForm
   - RPC_SetTimerValue
   - RPC_UpdateTimer
+  - RPC_ShootRaycast
+  - RPC_Reload
+  - RPC_SetColor
+  - RPC_tomarDano
+  - RPC_setColor
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
