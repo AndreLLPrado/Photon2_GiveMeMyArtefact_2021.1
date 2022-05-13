@@ -10,6 +10,8 @@ public class PlayerFormManager : MonoBehaviourPunCallbacks, IPunObservable
     PhotonView view;
     [SerializeField] private Material pColor;
     [SerializeField] private Renderer renderer;
+    private RaycastShooting mode;
+    private AimColorControl aimColor;
 
 
     private void Start()
@@ -18,6 +20,8 @@ public class PlayerFormManager : MonoBehaviourPunCallbacks, IPunObservable
         pJumpSpeed = GetComponent<PlayerMoviment>().jSpeed;
         view = GetComponent<PhotonView>();
         pColor.color = Color.white;
+        mode = GetComponent<RaycastShooting>();
+        aimColor = GetComponentInChildren<AimColorControl>();
 
         //view.RPC("RPC_RandomizeForm", RpcTarget.All);
     }
@@ -47,6 +51,8 @@ public class PlayerFormManager : MonoBehaviourPunCallbacks, IPunObservable
         GetComponent<PlayerMoviment>().speed = pSpeed;
         GetComponent<PlayerMoviment>().jSpeed = pJumpSpeed;
         //pColor.color = Color.blue;
+        mode.setPlayerMode("blue");
+        aimColor.setColor(Color.blue);
         renderer.material.color = Color.blue;
         gameObject.tag = "Wizzard";
     }
@@ -58,6 +64,8 @@ public class PlayerFormManager : MonoBehaviourPunCallbacks, IPunObservable
         GetComponent<PlayerMoviment>().speed = 10;
         GetComponent<PlayerMoviment>().jSpeed = 10;
         //pColor.color = Color.red;
+        aimColor.setColor(Color.red);
+        mode.setPlayerMode("red");
         renderer.material.color = Color.red;
         gameObject.tag = "Cat";
     }

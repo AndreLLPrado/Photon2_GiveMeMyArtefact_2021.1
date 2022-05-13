@@ -56,6 +56,7 @@ MonoBehaviour:
   - RPC_SetColor
   - RPC_tomarDano
   - RPC_setColor
+  - RPC_crateWall
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

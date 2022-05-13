@@ -12,23 +12,34 @@ public class RaycastShooting : MonoBehaviourPunCallbacks
     public float delay;
     float aux;
     PhotonView view;
-    // Start is called before the first frame update
+    private bool modoCriar;
+    private bool modoDestruir;
+    [SerializeField] private GameObject wall;
+    public float wallAngle;
+    public float scale;
+    public float creationDistance;
     void Start()
     {
         lr_laser = GetComponentInChildren<LineRenderer>();
         bulletTime = true;
         view = GetComponent<PhotonView>();
+        modoCriar = false;
+        modoCriar = false;
+        wallAngle = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
         if(view.IsMine){
-            view.RPC("RPC_ShootRaycast", RpcTarget.All);
+            if(modoCriar  && !modoDestruir){
+                view.RPC("RPC_crateWall", RpcTarget.All);
+            }
+            else if(!modoCriar && modoDestruir){
+                view.RPC("RPC_ShootRaycast", RpcTarget.All);
+            }
             view.RPC("RPC_Reload", RpcTarget.All);
         }
-        //ShootRaycast();
-        //Reload();
     }
     [PunRPC]
     void RPC_ShootRaycast(){
@@ -38,13 +49,28 @@ public class RaycastShooting : MonoBehaviourPunCallbacks
            lr_laser.SetPosition(1, hitInfo.transform.position);
            Debug.Log("Hited: " + hitInfo.transform.name);
            if(Input.GetMouseButtonDown(0)){
-               Debug.Log("Atirou!");
-               //hitInfo.transform.GetComponent<ObjetoDestrutivel>().tomarDano(1);
-               hitInfo.transform.GetComponent<ObjetoDestrutivel>().callTomarDanoRPC(1);
-               //mouseClickToShooting(hitInfo.transform);
+                Debug.Log("Atirou!");
+                hitInfo.transform.GetComponent<ObjetoDestrutivel>().callTomarDanoRPC(1);
            }
         }
         else{
+            lr_laser.SetPosition(1, mira.position);
+        }
+    }
+    [PunRPC]
+    void RPC_crateWall(){
+        lr_laser.SetPosition(0, transform.position);
+        
+        RaycastHit hitInfo;
+        if(Physics.Raycast(transform.position,mira.position, out hitInfo, creationDistance)){
+            Debug.Log("You don't create here, colide to: " + hitInfo.transform.name);
+            lr_laser.SetPosition(1, hitInfo.transform.position);
+        }else{
+            Vector3 pos = new Vector3(mira.position.x, 1, mira.position.z);
+            if(Input.GetMouseButtonDown(0)){
+                Quaternion angle = new Quaternion(0,wallAngle,0,0);
+                Instantiate(wall, pos, angle);
+            }
             lr_laser.SetPosition(1, mira.position);
         }
     }
@@ -67,6 +93,25 @@ public class RaycastShooting : MonoBehaviourPunCallbacks
                 bulletTime = true;
                 delay = aux;
             }
+        }
+    }
+
+    public void setPlayerMode(string mode){
+        if(mode != null){
+            if(mode.ToLower() == "red"){
+                modoDestruir = true;
+                modoCriar = false;
+            }
+            else if(mode.ToLower() == "blue"){
+                modoDestruir = false;
+                modoCriar = true;
+            }
+            else{
+                Debug.Log("This mode doesn't exist: " + mode.ToLower());
+            }
+        }
+        else{
+            Debug.Log("Mode is equal to null");
         }
     }
 }

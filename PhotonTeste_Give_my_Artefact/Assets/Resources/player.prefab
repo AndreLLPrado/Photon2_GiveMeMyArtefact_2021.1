@@ -452,6 +452,10 @@ MonoBehaviour:
     m_Bits: 128
   mira: {fileID: 5755084064423525043}
   delay: 0
+  wall: {fileID: 454330186082966965, guid: edee9647c9b27f2459e46ae52f8b1211, type: 3}
+  wallAngle: 0
+  scale: 1
+  creationDistance: 999999
 --- !u!114 &4915229274625969242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -575,6 +579,7 @@ GameObject:
   - component: {fileID: 5755084064423525043}
   - component: {fileID: 4461533151571445173}
   - component: {fileID: 7149624873501393671}
+  - component: {fileID: 1803745543032217621}
   - component: {fileID: 154649549738518577}
   m_Layer: 0
   m_Name: Aim
@@ -624,7 +629,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: ea0a6f430aaf3f44dae49c4ffbf4bce0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -646,6 +651,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1803745543032217621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8118196720497307460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f251e5ec56ce56e419448ff5e9c26d17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderer: {fileID: 7149624873501393671}
 --- !u!114 &154649549738518577
 MonoBehaviour:
   m_ObjectHideFlags: 0
