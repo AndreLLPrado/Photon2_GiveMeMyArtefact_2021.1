@@ -30,8 +30,10 @@ public class PlayerMoviment : MonoBehaviour
 
             if (!pStop)
             {
-                MovePlayer();
-                posRes = false;
+                if(GetComponent<PlayerFormManager>().confirmedMode){
+                    MovePlayer();
+                    posRes = false;
+                }
             }
 
             if(pStop)

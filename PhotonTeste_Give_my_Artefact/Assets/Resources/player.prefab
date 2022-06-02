@@ -407,6 +407,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pColor: {fileID: 2100000, guid: b666f85ec11a3064ca51fc219c013397, type: 2}
   renderer: {fileID: 7552686705011474300}
+  charMode: 0
+  confirmedMode: 0
 --- !u!114 &2270907371725955053
 MonoBehaviour:
   m_ObjectHideFlags: 0

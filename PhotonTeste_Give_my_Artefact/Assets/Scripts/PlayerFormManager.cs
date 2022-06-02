@@ -12,6 +12,8 @@ public class PlayerFormManager : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] private Renderer renderer;
     private RaycastShooting mode;
     private AimColorControl aimColor;
+    public int charMode;
+    public bool confirmedMode;
 
 
     private void Start()
@@ -30,14 +32,16 @@ public class PlayerFormManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (view.IsMine)
         {
+            charMode = GameObject.Find("Canvas").GetComponent<SelectModeCanvas>().getModeIndex();
+            confirmedMode = GameObject.Find("Canvas").GetComponent<SelectModeCanvas>().getConfirmed();
             //set player as wizzard
-            if (Input.GetKeyDown(KeyCode.Alpha1))
+            if (Input.GetKeyDown(KeyCode.Alpha1) || charMode == 1 && confirmedMode)
             {
                 view.RPC("RPC_SetPlayerWizzardForm", RpcTarget.All);
             }
 
             //set player as cat
-            if (Input.GetKeyDown(KeyCode.Alpha2))
+            if (Input.GetKeyDown(KeyCode.Alpha2) || charMode == 2 && confirmedMode)
             {
                 view.RPC("RPC_SetPlayerCatForm", RpcTarget.All);
             }
