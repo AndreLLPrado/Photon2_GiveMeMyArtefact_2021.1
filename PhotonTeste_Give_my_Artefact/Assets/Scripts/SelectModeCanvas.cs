@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 
-public class SelectModeCanvas : MonoBehaviourPunCallbacks, IPunObservable
+public class SelectModeCanvas : MonoBehaviourPunCallbacks
 {
     [SerializeField] private Text desc;
     private int modeIndex;
@@ -48,10 +48,9 @@ public class SelectModeCanvas : MonoBehaviourPunCallbacks, IPunObservable
     }
 
     public void setMode(int mode){
-        view.RPC("RPC_setMode", RpcTarget.All, mode);
-        /*if(view.IsMine){
-            modeIndex = mode;
-        }*/
+        if(view.IsMine){
+            view.RPC("RPC_setMode", RpcTarget.All, mode);
+        }
     }
 
     [PunRPC]
@@ -62,27 +61,11 @@ public class SelectModeCanvas : MonoBehaviourPunCallbacks, IPunObservable
         //}
     }
     public void confirmMode(){
-        view.RPC("RPG_confirmMode",RpcTarget.All);
-        /*if(view.IsMine){
-            selfPanel.SetActive(false);
-            confirmed = true;
-        }*/
+        if(view.IsMine){
+            view.RPC("RPG_confirmMode",RpcTarget.All);
+        }
     }
 
     public int getModeIndex(){return modeIndex;}
     public bool getConfirmed(){return confirmed;}
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        //local
-        if (stream.IsWriting)
-        {
-            stream.SendNext(modeIndex);
-        }
-        //client
-        else
-        {
-            modeIndex = (int)stream.ReceiveNext();
-        }
-    }
 }

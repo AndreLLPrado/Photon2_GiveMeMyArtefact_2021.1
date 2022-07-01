@@ -22,7 +22,7 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         //PhotonNetwork.LoadLevel("Game");
-        //PhotonNetwork.LoadLevel("Cenario1");
-        PhotonNetwork.LoadLevel("TestesDestruicao");
+        PhotonNetwork.LoadLevel("Cenario1");
+        //PhotonNetwork.LoadLevel("TestesDestruicao");
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class PlayerFormManager : MonoBehaviourPunCallbacks, IPunObservable
+public class PlayerFormManager : MonoBehaviourPunCallbacks
 {
     float pSpeed, pJumpSpeed;
     int formIndex;
@@ -30,18 +30,18 @@ public class PlayerFormManager : MonoBehaviourPunCallbacks, IPunObservable
 
     private void Update()
     {
+            //getCanvasMode();
+            confirmedMode = true;
         if (view.IsMine)
         {
-            charMode = GameObject.Find("Canvas").GetComponent<SelectModeCanvas>().getModeIndex();
-            confirmedMode = GameObject.Find("Canvas").GetComponent<SelectModeCanvas>().getConfirmed();
             //set player as wizzard
-            if (Input.GetKeyDown(KeyCode.Alpha1) || charMode == 1 && confirmedMode)
+            if ((Input.GetKeyDown(KeyCode.Alpha1) || charMode == 1) && confirmedMode)
             {
                 view.RPC("RPC_SetPlayerWizzardForm", RpcTarget.All);
             }
 
             //set player as cat
-            if (Input.GetKeyDown(KeyCode.Alpha2) || charMode == 2 && confirmedMode)
+            if ((Input.GetKeyDown(KeyCode.Alpha2) || charMode == 2) && confirmedMode)
             {
                 view.RPC("RPC_SetPlayerCatForm", RpcTarget.All);
             }
@@ -74,63 +74,8 @@ public class PlayerFormManager : MonoBehaviourPunCallbacks, IPunObservable
         gameObject.tag = "Cat";
     }
 
-    [PunRPC]
-    void RPC_RandomizeForm()
-    {
-        if(formIndex == 0)
-        {
-            formIndex = Random.Range(1, 3);
-        }
-
-        //wizzard index
-        if(formIndex == 1)
-        {
-            Debug.Log("Index from set to Wizzard");
-        }
-
-        //cat index
-        if (formIndex == 2)
-        {
-            Debug.Log("Index from set to Cat");
-        }
-        //wrong index
-        else
-        {
-            Debug.Log("anything is wrong!");
-        }
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        //local
-        if (stream.IsWriting)
-        {
-            stream.SendNext(formIndex);
-
-            //if(formIndex == 1)
-            //{
-
-            //}
-
-            //if(formIndex == 2)
-            //{
-
-            //}
-        }
-        //client
-        else
-        {
-            formIndex = (int)stream.ReceiveNext();
-
-            //if (formIndex == 1)
-            //{
-
-            //}
-
-            //if (formIndex == 2)
-            //{
-
-            //}
-        }
+    void getCanvasMode(){
+        charMode = GameObject.Find("Canvas").GetComponent<SelectModeCanvas>().getModeIndex();
+        confirmedMode = GameObject.Find("Canvas").GetComponent<SelectModeCanvas>().getConfirmed();
     }
 }
