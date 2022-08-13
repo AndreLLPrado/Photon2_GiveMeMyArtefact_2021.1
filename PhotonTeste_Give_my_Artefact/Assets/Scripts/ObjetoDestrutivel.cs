@@ -10,10 +10,26 @@ public class ObjetoDestrutivel : MonoBehaviourPunCallbacks
     [SerializeField] private Material color;
     PhotonView view;
 
+    private bool pauseGame;
+
     void Start(){
         view = GetComponent<PhotonView>();
         color.color = Color.gray;
         view.RPC("RPC_setColor", RpcTarget.All, life);
+    }
+
+    private void Update()
+    {
+        pauseGame = GameObject.Find("GameManager").GetComponent<GameManagerScript>().cCaught;
+
+        view.RPC("RPC_gameState",RpcTarget.All,pauseGame);
+    }
+
+    [PunRPC]
+    void RPC_gameState(bool p)
+    {
+        if(p)
+            Destroy(gameObject);
     }
 
     [PunRPC]

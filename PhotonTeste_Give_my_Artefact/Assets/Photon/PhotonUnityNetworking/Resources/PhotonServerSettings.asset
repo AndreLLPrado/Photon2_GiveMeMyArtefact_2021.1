@@ -59,6 +59,7 @@ MonoBehaviour:
   - RPC_crateWall
   - RPC_setMode
   - RPG_confirmMode
+  - RPC_gameState
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

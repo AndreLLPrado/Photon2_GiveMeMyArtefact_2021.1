@@ -18,6 +18,8 @@ public class RaycastShooting : MonoBehaviourPunCallbacks
     public float wallAngle;
     public float scale;
     public float creationDistance;
+
+    private bool pauseGame;
     void Start()
     {
         lr_laser = GetComponentInChildren<LineRenderer>();
@@ -31,11 +33,24 @@ public class RaycastShooting : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        if(view.IsMine){
-            if(modoCriar  && !modoDestruir){
+        pauseGame = GameObject.Find("GameManager").GetComponent<GameManagerScript>().cCaught;
+        //if(view.IsMine){
+        //    if(modoCriar  && !modoDestruir){
+        //        view.RPC("RPC_crateWall", RpcTarget.All);
+        //    }
+        //    else if(!modoCriar && modoDestruir){
+        //        view.RPC("RPC_ShootRaycast", RpcTarget.All);
+        //    }
+        //    view.RPC("RPC_Reload", RpcTarget.All);
+        //}
+        if (!pauseGame)
+        {
+            if (modoCriar && !modoDestruir)
+            {
                 view.RPC("RPC_crateWall", RpcTarget.All);
             }
-            else if(!modoCriar && modoDestruir){
+            else if (!modoCriar && modoDestruir)
+            {
                 view.RPC("RPC_ShootRaycast", RpcTarget.All);
             }
             view.RPC("RPC_Reload", RpcTarget.All);
@@ -69,7 +84,7 @@ public class RaycastShooting : MonoBehaviourPunCallbacks
             Vector3 pos = new Vector3(mira.position.x, 1, mira.position.z);
             if(Input.GetMouseButtonDown(0)){
                 Quaternion angle = new Quaternion(0,wallAngle,0,0);
-                Instantiate(wall, pos, angle);
+                PhotonNetwork.Instantiate("wall", pos, angle);
             }
             lr_laser.SetPosition(1, mira.position);
         }
@@ -114,4 +129,8 @@ public class RaycastShooting : MonoBehaviourPunCallbacks
             Debug.Log("Mode is equal to null");
         }
     }
+
+    //void OnPhotonInstantiate(PhotonMessageInfo info) { 
+        
+    //}
 }
