@@ -1,6 +1,6 @@
-# Photon2_GiveMeMyArtefact_2021.2
-Developed by André Prado and Gerrit B. Werk
-Unity Version: 2020.3.13f1
+# Photon2_GiveMeMyArtefact_2022.2
+Developed by André Prado
+Unity Version: 2020.3.37f1
 Network Technology: Photon 2 Pun Free 2.39
 
 Game commands:
@@ -10,5 +10,8 @@ Move:
 	'S'
 	'D'
 	
-Change to Wizzard: '1'
-Change to Cat: '2'
+Change to Blue: '1'
+Change to Red: '2'
+
+Mouse 0 with Red shoot in objects
+Mouse 0 with Blue create wall
