@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.UI;
 
-public class RaycastShooting : MonoBehaviourPunCallbacks
+public class RaycastShooting : MonoBehaviourPunCallbacks, IPunObservable
 {
     public LayerMask layer;
     public Transform mira;
@@ -20,6 +21,7 @@ public class RaycastShooting : MonoBehaviourPunCallbacks
     public float creationDistance;
 
     private bool pauseGame;
+    //[SerializeField] private Text angleTxt;
     void Start()
     {
         lr_laser = GetComponentInChildren<LineRenderer>();
@@ -27,7 +29,6 @@ public class RaycastShooting : MonoBehaviourPunCallbacks
         view = GetComponent<PhotonView>();
         modoCriar = false;
         modoCriar = false;
-        wallAngle = 0;
     }
 
     // Update is called once per frame
@@ -62,9 +63,9 @@ public class RaycastShooting : MonoBehaviourPunCallbacks
         RaycastHit hitInfo;
         if(Physics.Raycast(transform.position, mira.position, out hitInfo, Mathf.Infinity, layer)){
            lr_laser.SetPosition(1, hitInfo.transform.position);
-           Debug.Log("Hited: " + hitInfo.transform.name);
+           //Debug.Log("Hited: " + hitInfo.transform.name);
            if(Input.GetMouseButtonDown(0)){
-                Debug.Log("Atirou!");
+                //Debug.Log("Atirou!");
                 hitInfo.transform.GetComponent<ObjetoDestrutivel>().callTomarDanoRPC(1);
            }
         }
@@ -78,13 +79,15 @@ public class RaycastShooting : MonoBehaviourPunCallbacks
         
         RaycastHit hitInfo;
         if(Physics.Raycast(transform.position,mira.position, out hitInfo, creationDistance)){
-            Debug.Log("You don't create here, colide to: " + hitInfo.transform.name);
+            //Debug.Log("You don't create here, colide to: " + hitInfo.transform.name);
             lr_laser.SetPosition(1, hitInfo.transform.position);
         }else{
             Vector3 pos = new Vector3(mira.position.x, 1, mira.position.z);
-            if(Input.GetMouseButtonDown(0)){
-                Quaternion angle = new Quaternion(0,wallAngle,0,0);
-                PhotonNetwork.Instantiate("wall", pos, angle);
+            if(Input.GetMouseButtonDown(0))
+            {
+                //PhotonNetwork.Instantiate("wall", pos, angle);
+                //PhotonNetwork.Instantiate("wall", pos, transform.rotation * Quaternion.Euler(new Vector3(0f, wallAngle, 0f)));
+                PhotonNetwork.Instantiate("wall", pos, transform.rotation * Quaternion.Euler(new Vector3(0f, 90f, 0f)));
             }
             lr_laser.SetPosition(1, mira.position);
         }
@@ -102,7 +105,7 @@ public class RaycastShooting : MonoBehaviourPunCallbacks
     [PunRPC]
     void RPC_Reload(){
          if(!bulletTime){
-            Debug.Log("Recarregando");
+            //Debug.Log("Recarregando");
             delay -= 1.0f * Time.deltaTime;
             if(delay <= 0.0f){
                 bulletTime = true;
@@ -122,15 +125,27 @@ public class RaycastShooting : MonoBehaviourPunCallbacks
                 modoCriar = true;
             }
             else{
-                Debug.Log("This mode doesn't exist: " + mode.ToLower());
+               //Debug.Log("This mode doesn't exist: " + mode.ToLower());
             }
         }
         else{
-            Debug.Log("Mode is equal to null");
+            //Debug.Log("Mode is equal to null");
         }
     }
 
     //void OnPhotonInstantiate(PhotonMessageInfo info) { 
-        
+
     //}
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(wallAngle);
+        }
+        else
+        {
+            wallAngle = (float)stream.ReceiveNext();
+        }
+    }
 }

@@ -77,10 +77,10 @@ public class PlayerMoviment : MonoBehaviour
             move = transform.TransformDirection(move);
             move *= speed;
 
-            if (Input.GetButton("Jump"))
-            {
-                move.y = jSpeed;
-            }
+            //if (Input.GetButton("Jump"))
+            //{
+            //    move.y = jSpeed;
+            //}
         }
 
             move.y -= grativy * Time.deltaTime;
